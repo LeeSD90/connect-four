@@ -1,6 +1,8 @@
 class ConnectFour
+	attr_accessor :board
 
 	def initialize
+		@board = Board.new
 	end
 
 end
@@ -16,6 +18,16 @@ class Board
 		if !x.between?(1,6) || !y.between?(1,7) then
 			return "Cell (#{x}, #{y}) is out of bounds!"
 		else return @cells[x][y]
+		end
+	end
+
+	def set_cell(x, y, v)
+		if !x.between?(1,6) || !y.between?(1,7) then
+			return "Cell (#{x}, #{y}) is out of bounds!"
+		elsif v != "Red" && v!= "Yellow"
+			return "Value #{v} is invalid!"
+		else
+			@cells[x][y] = v
 		end
 	end
 
