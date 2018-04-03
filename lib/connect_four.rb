@@ -48,42 +48,32 @@ class ConnectFour
 				row.each_index.select{|i| row[i] == color }.map{|column_index| [row_index, column_index]}
 			}
 			coordinates.each do |(x,y)|
-				sequence = false
+				found_win = false
 				if board.get_cell(x+1,y) == color then
-					sequence = check_win(color, [1,0], x, y)
-					#return sequence
+					found_win = check_win(color, [1,0], x, y)
 				end
 				if board.get_cell(x-1,y) == color then
-					sequence = check_win(color, [0,-1], x, y) unless sequence
-					#return sequence
+					found_win = check_win(color, [0,-1], x, y) unless found_win
 				end
 				if board.get_cell(x,y+1) == color then
-					sequence = check_win(color, [0,1], x, y) unless sequence
-					#return sequence
+					found_win = check_win(color, [0,1], x, y) unless found_win
 				end
 				if board.get_cell(x,y-1) == color then
-					sequence = check_win(color, [0,-1], x, y) unless sequence
-					#return sequence
+					found_win = check_win(color, [0,-1], x, y) unless found_win
 				end
 				if board.get_cell(x+1,y+1) == color then
-					sequence = check_win(color, [1,1], x, y) unless sequence
-					#return sequence
+					found_win = check_win(color, [1,1], x, y) unless found_win
 				end
 				if board.get_cell(x-1,y-1) == color then
-					sequence = check_win(color, [-1,-1], x, y) unless sequence
-					#return sequence
+					found_win = check_win(color, [-1,-1], x, y) unless found_win
 				end
 				if board.get_cell(x+1,y-1) == color then
-					sequence = check_win(color, [1,-1], x, y) unless sequence
-					#return sequence
+					found_win = check_win(color, [1,-1], x, y) unless found_win
 				end
 				if board.get_cell(x-1,y+1) == color then
-					sequence = check_win(color, [-1,1], x, y) unless sequence
-					#return sequence
+					found_win = check_win(color, [-1,1], x, y) unless found_win
 				end
-				return sequence
-				#sequence = false
-				#return false
+				return found_win
 			end
 		else
 			x = x+direction[0]
