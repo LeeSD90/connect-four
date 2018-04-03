@@ -1,9 +1,29 @@
 require 'connect_four'
 
 describe ConnectFour do
-	let(:game) {ConnectFour.new}
 
 	describe '#check_win' do
+
+		context "when there is a horizontal win" do
+			it "returns true" do
+			end
+		end
+
+		context "when there is a vertical win" do
+			it "returns true" do
+			end
+		end
+
+		context "when there is a diagonal win" do
+			it "returns true" do
+			end
+		end
+
+		context "when there is no winning line" do
+			it "returns false" do
+			end
+		end
+
 	end
 
 	describe "Board" do
@@ -22,8 +42,8 @@ describe ConnectFour do
 				it "returns the cell value" do
 					expect(subject.board.get_cell(2,4)).to eql nil
 					expect(subject.board.get_cell(1,1)).to eql nil
-					subject.board.cells = Array.new(7){Array.new(6, "Red")}
-					expect(subject.board.get_cell(4,5)).to eql "Red"
+					subject.board.cells = Array.new(7){Array.new(6, "R")}
+					expect(subject.board.get_cell(4,5)).to eql "R"
 				end
 			end
 
@@ -40,17 +60,17 @@ describe ConnectFour do
 
 			context "given a valid cell coordinate and value" do
 				it "sets the cell to the given value and returns true" do
-					expect(subject.board.set_cell(1,2, "Red")).to eql true
-					expect(subject.board.cells[1][2]).to eql "Red"
-					expect(subject.board.set_cell(1,1, "Yellow")).to eql true
-					expect(subject.board.cells[1][1]).to eql "Yellow"
+					expect(subject.board.set_cell(1,2, "R")).to eql true
+					expect(subject.board.cells[1][2]).to eql "R"
+					expect(subject.board.set_cell(1,1, "Y")).to eql true
+					expect(subject.board.cells[1][1]).to eql "Y"
 				end
 			end
 
 			context "given an out of bounds cell coordinate" do
 				it "returns false" do
-					expect(subject.board.set_cell(-4, 3, "Yellow")).to eql false
-					expect(subject.board.set_cell(3, 10, "Red")).to eql false
+					expect(subject.board.set_cell(-4, 3, "Y")).to eql false
+					expect(subject.board.set_cell(3, 10, "R")).to eql false
 				end
 			end
 
@@ -68,9 +88,9 @@ describe ConnectFour do
 			context "given a valid column x coordinate" do
 				it "counts the number of spaces already taken in the specified column" do
 					expect(subject.board.count_column(1)).to eql 0
-					subject.board.set_cell(2,1, "Yellow")
-					subject.board.set_cell(2,2, "Red")
-					subject.board.set_cell(2,3, "Yellow")
+					subject.board.set_cell(2,1, "Y")
+					subject.board.set_cell(2,2, "R")
+					subject.board.set_cell(2,3, "Y")
 					expect(subject.board.count_column(2)).to eql 3
 				end
 			end

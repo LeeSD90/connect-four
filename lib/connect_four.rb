@@ -1,3 +1,4 @@
+
 class ConnectFour
 	attr_accessor :board, :p1, :p2
 	@win = false
@@ -5,8 +6,8 @@ class ConnectFour
 
 	def initialize
 		@board = Board.new
-		@p1 = Player.new("Player One", "Red")
-		@p2 = Player.new("Player Two", "Yellow")
+		@p1 = Player.new("Player One", "R")
+		@p2 = Player.new("Player Two", "Y")
 		@last_turn = @p2
 		play
 	end
@@ -19,13 +20,14 @@ class ConnectFour
 	end
 
 	def take_turn(player)
-		puts "Your turn #{player.name}."
+		puts "\nYour turn #{player.name}.\n"
 		x, y = -1
+		@board.draw
 
 		loop do
-			puts "Select a column(1-7) with an empty space."
-			x = gets.chomp.to_i
-			y = board.count_column(x) + 1
+			puts "\nSelect a column(1-7) with an empty space."
+			x = gets.chomp.to_i - 1
+			y = board.count_column(x)
 			if @board.set_cell(x,y,player.color)
 				break
 			end
@@ -48,16 +50,16 @@ class Board
 	end
 
 	def get_cell(x,y)
-		if !x.between?(1,6) || !y.between?(1,7) then
+		if !x.between?(0,6) || !y.between?(0,5) then
 			return "Cell (#{x}, #{y}) is out of bounds!"
 		else return @cells[x][y]
 		end
 	end
 
 	def set_cell(x, y, v)
-		if !x.between?(1,7) || !y.between?(1,6) then
+		if !x.between?(0,6) || !y.between?(0,5) then
 			return false
-		elsif v != "Red" && v!= "Yellow"
+		elsif v != "R" && v!= "Y"
 			return false
 		else
 			@cells[x][y] = v
@@ -66,11 +68,31 @@ class Board
 	end
 
 	def count_column(x)
-		if !x.between?(1,7) then
+		if !x.between?(0,6) then
 			return "Column #{x} doesn't exist!"
 		else
 			return cells[x].length - cells[x].count(nil)
 		end
+	end
+
+	def draw
+		x = 0
+		y = @cells[0].length - 1
+		print @cells[x][y]
+
+		until y == -1
+			print "\n|"
+			until x == @cells.length
+				value = get_cell(x,y).to_s
+				print value.empty? ? " _ |" : " " + value.to_s + " |"
+				x += 1
+			end
+			x = 0
+			puts
+			y -= 1
+		end
+		puts
+		print "  1   2   3   4   5   6   7"
 	end
 
 	private
