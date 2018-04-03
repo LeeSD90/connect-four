@@ -20,11 +20,11 @@ class ConnectFour
 	end
 
 	def take_turn(player)
-		puts "\nYour turn #{player.name}.\n"
 		x, y = -1
 		@board.draw
-
+		puts "\n\nYour turn #{player.name} (#{player.color}).\n"
 		loop do
+
 			puts "\nSelect a column(1-7) with an empty space."
 			x = gets.chomp.to_i - 1
 			y = board.count_column(x)
@@ -34,10 +34,67 @@ class ConnectFour
 		end
 
 		@last_turn = player
-		@win = check_win
+		@win = check_win(player.color)
+		if @win
+			@board.draw
+			puts "\n\n#{player.name} wins!"
+		end
 	end
 
-	def check_win(color)
+	def check_win(color, direction=nil, x=nil, y=nil, correct=1)
+		if correct == 4 then return true end
+		if direction.nil? then
+			coordinates = @board.cells.flat_map.with_index{ |row, row_index|
+				row.each_index.select{|i| row[i] == color }.map{|column_index| [row_index, column_index]}
+			}
+			coordinates.each do |(x,y)|
+				sequence = false
+				if board.get_cell(x+1,y) == color then
+					sequence = check_win(color, [1,0], x, y)
+					#return sequence
+				end
+				if board.get_cell(x-1,y) == color then
+					sequence = check_win(color, [0,-1], x, y) unless sequence
+					#return sequence
+				end
+				if board.get_cell(x,y+1) == color then
+					sequence = check_win(color, [0,1], x, y) unless sequence
+					#return sequence
+				end
+				if board.get_cell(x,y-1) == color then
+					sequence = check_win(color, [0,-1], x, y) unless sequence
+					#return sequence
+				end
+				if board.get_cell(x+1,y+1) == color then
+					sequence = check_win(color, [1,1], x, y) unless sequence
+					#return sequence
+				end
+				if board.get_cell(x-1,y-1) == color then
+					sequence = check_win(color, [-1,-1], x, y) unless sequence
+					#return sequence
+				end
+				if board.get_cell(x+1,y-1) == color then
+					sequence = check_win(color, [1,-1], x, y) unless sequence
+					#return sequence
+				end
+				if board.get_cell(x-1,y+1) == color then
+					sequence = check_win(color, [-1,1], x, y) unless sequence
+					#return sequence
+				end
+				return sequence
+				#sequence = false
+				#return false
+			end
+		else
+			x = x+direction[0]
+			y = y+direction[1]
+			if board.get_cell(x, y) == color then
+				correct += 1
+				return check_win(color, direction, x, y, correct)
+			else return false
+			end
+		end
+		return false
 	end
 
 end
@@ -92,7 +149,7 @@ class Board
 			y -= 1
 		end
 		puts
-		print "  1   2   3   4   5   6   7"
+		print "  1   2   3   4   5   6   7  \n"
 	end
 
 	private

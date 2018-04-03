@@ -2,50 +2,6 @@ require 'connect_four'
 
 describe ConnectFour do
 
-	describe '#check_win' do
-
-		context "when there is a horizontal win" do
-			it "returns true" do
-				subject.board.set_cell(2,3, "Y")
-				subject.board.set_cell(3,3, "Y")
-				subject.board.set_cell(4,3, "Y")
-				subject.board.set_cell(5,3, "Y")
-				expect(subject.board.check_win("Y")).to eql true
-			end
-		end
-
-		context "when there is a vertical win" do
-			it "returns true" do
-				subject.board.set_cell(2,3, "Y")
-				subject.board.set_cell(2,4, "Y")
-				subject.board.set_cell(2,5, "Y")
-				subject.board.set_cell(2,6, "Y")
-				expect(subject.board.check_win("Y")).to eql true
-			end
-		end
-
-		context "when there is a diagonal win" do
-			it "returns true" do
-				subject.board.set_cell(2,3, "Y")
-				subject.board.set_cell(3,4, "Y")
-				subject.board.set_cell(4,5, "Y")
-				subject.board.set_cell(5,6, "Y")
-				expect(subject.board.check_win("Y")).to eql true
-			end
-		end
-
-		context "when there is no winning line" do
-			it "returns false" do
-				subject.board.set_cell(2,3, "Y")
-				subject.board.set_cell(3,3, "Y")
-				subject.board.set_cell(4,3, "R")
-				subject.board.set_cell(5,3, "Y")
-				expect(subject.board.check_win("Y")).to eql false
-			end
-		end
-
-	end
-
 	describe "Board" do
 
 		describe '#initialize' do
@@ -122,6 +78,51 @@ describe ConnectFour do
 					expect(subject.board.count_column(-3)).to eql "Column -3 doesn't exist!"
 				end
 			end
+		end
+
+		describe '#check_win' do
+
+			context "when there is a horizontal win" do
+				it "returns true" do
+					subject.board.set_cell(2,3, "Y")
+					subject.board.set_cell(3,3, "Y")
+					subject.board.set_cell(4,3, "Y")
+					subject.board.set_cell(5,3, "Y")
+					expect(subject.check_win("Y")).to eql true
+				end
+			end
+
+			context "when there is a vertical win" do
+				it "returns true" do
+					subject.board.set_cell(1,2, "Y")
+					subject.board.set_cell(1,3, "Y")
+					subject.board.set_cell(1,4, "Y")
+					subject.board.set_cell(1,5, "Y")
+					expect(subject.check_win("Y")).to eql true
+				end
+			end
+
+			context "when there is a diagonal win" do
+				it "returns true" do
+					subject.board.set_cell(5,0, "Y")
+					subject.board.set_cell(4,1, "Y")
+					subject.board.set_cell(3,2, "Y")
+					subject.board.set_cell(2,3, "Y")
+					subject.board.draw
+					expect(subject.check_win("Y")).to eql true
+				end
+			end
+
+			context "when there is no winning line" do
+				it "returns false" do
+					subject.board.set_cell(2,3, "Y")
+					subject.board.set_cell(3,3, "Y")
+					subject.board.set_cell(4,3, "R")
+					subject.board.set_cell(5,3, "Y")
+					expect(subject.check_win("Y")).to eql false
+				end
+			end
+
 		end
 
 	end
