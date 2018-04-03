@@ -108,7 +108,6 @@ describe ConnectFour do
 					subject.board.set_cell(4,1, "Y")
 					subject.board.set_cell(3,2, "Y")
 					subject.board.set_cell(2,3, "Y")
-					subject.board.draw
 					expect(subject.check_win("Y")).to eql true
 				end
 			end

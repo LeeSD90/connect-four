@@ -9,7 +9,7 @@ class ConnectFour
 		@p1 = Player.new("Player One", "R")
 		@p2 = Player.new("Player Two", "Y")
 		@last_turn = @p2
-		play
+		#play
 	end
 
 	def play
@@ -50,30 +50,18 @@ class ConnectFour
 			coordinates.each do |(x,y)|
 				found_win = false
 				if board.get_cell(x+1,y) == color then
-					found_win = check_win(color, [1,0], x, y)
-				end
-				if board.get_cell(x-1,y) == color then
-					found_win = check_win(color, [0,-1], x, y) unless found_win
+					found_win = check_win(color, [1,0], x, y) unless found_win
 				end
 				if board.get_cell(x,y+1) == color then
 					found_win = check_win(color, [0,1], x, y) unless found_win
 				end
-				if board.get_cell(x,y-1) == color then
-					found_win = check_win(color, [0,-1], x, y) unless found_win
+				if board.get_cell(x+1,y-1) == color then
+					found_win = check_win(color, [1,-1], x, y) unless found_win
 				end
 				if board.get_cell(x+1,y+1) == color then
 					found_win = check_win(color, [1,1], x, y) unless found_win
 				end
-				if board.get_cell(x-1,y-1) == color then
-					found_win = check_win(color, [-1,-1], x, y) unless found_win
-				end
-				if board.get_cell(x+1,y-1) == color then
-					found_win = check_win(color, [1,-1], x, y) unless found_win
-				end
-				if board.get_cell(x-1,y+1) == color then
-					found_win = check_win(color, [-1,1], x, y) unless found_win
-				end
-				return found_win
+				if found_win then return found_win end
 			end
 		else
 			x = x+direction[0]
