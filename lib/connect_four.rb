@@ -37,7 +37,7 @@ class ConnectFour
 		@win = check_win
 	end
 
-	def check_win
+	def check_win(color)
 	end
 
 end

@@ -6,21 +6,41 @@ describe ConnectFour do
 
 		context "when there is a horizontal win" do
 			it "returns true" do
+				subject.board.set_cell(2,3, "Y")
+				subject.board.set_cell(3,3, "Y")
+				subject.board.set_cell(4,3, "Y")
+				subject.board.set_cell(5,3, "Y")
+				expect(subject.board.check_win("Y")).to eql true
 			end
 		end
 
 		context "when there is a vertical win" do
 			it "returns true" do
+				subject.board.set_cell(2,3, "Y")
+				subject.board.set_cell(2,4, "Y")
+				subject.board.set_cell(2,5, "Y")
+				subject.board.set_cell(2,6, "Y")
+				expect(subject.board.check_win("Y")).to eql true
 			end
 		end
 
 		context "when there is a diagonal win" do
 			it "returns true" do
+				subject.board.set_cell(2,3, "Y")
+				subject.board.set_cell(3,4, "Y")
+				subject.board.set_cell(4,5, "Y")
+				subject.board.set_cell(5,6, "Y")
+				expect(subject.board.check_win("Y")).to eql true
 			end
 		end
 
 		context "when there is no winning line" do
 			it "returns false" do
+				subject.board.set_cell(2,3, "Y")
+				subject.board.set_cell(3,3, "Y")
+				subject.board.set_cell(4,3, "R")
+				subject.board.set_cell(5,3, "Y")
+				expect(subject.board.check_win("Y")).to eql false
 			end
 		end
 
